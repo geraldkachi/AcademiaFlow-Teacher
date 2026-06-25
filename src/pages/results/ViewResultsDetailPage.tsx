@@ -84,7 +84,7 @@ const mockResultData = {
 
 export default function ResultsDetailPage() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { } = useParams();
   const [showAnswers, setShowAnswers] = useState<Record<string, boolean>>({});
   const [data] = useState(mockResultData);
 
