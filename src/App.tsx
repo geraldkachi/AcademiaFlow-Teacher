@@ -17,6 +17,7 @@ import GradeAssignmentPage from './pages/assignments/GradeAssignmentPage';
 import ResultsPage from './pages/results/ResultsPage';
 import NotificationsPage from './pages/notifications/NotificationsPage';
 import SettingsPage from './pages/settings/SettingsPage';
+import ViewResultsDetailPage from './pages/results/ViewResultsDetailPage';
 
 const qc = new QueryClient({ defaultOptions: { queries: { retry: 1, staleTime: 5 * 60 * 1000 } } });
 
@@ -42,6 +43,7 @@ export default function App() {
               <Route path="/assignments/create" element={<CreateAssignmentPage/>}/>
               <Route path="/assignments/:id/grade" element={<GradeAssignmentPage/>}/>
               <Route path="/results" element={<ResultsPage/>}/>
+              <Route path="/results/1" element={<ViewResultsDetailPage/>}/>
               <Route path="/notifications" element={<NotificationsPage/>}/>
               <Route path="/settings" element={<SettingsPage/>}/>
             </Route>

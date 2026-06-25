@@ -3,23 +3,25 @@ import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { resultsApi } from '../../api/services';
+import { useNavigate } from 'react-router-dom';
+
 
 const mockResults = [
-  { id: '1', title: 'Mathematics Finals', class: 'SS1 A,B,C', date: 'Feb 5, 2026', students: 62, avg_score: 70, pass_rate: 84, highest: 95, lowest: 40, submissions: '60/62', has_theory: true },
-  { id: '2', title: 'Mathematics Finals', class: 'SS2 A,B,C', date: 'Feb 5, 2026', students: 87, avg_score: 64, pass_rate: 75, highest: 80, lowest: 42, submissions: '80/82', has_theory: false },
-  { id: '3', title: 'Science Finals', class: 'SS2 A,B,C', date: 'Feb 6, 2026', students: 90, avg_score: 70, pass_rate: 78, highest: 85, lowest: 95, submissions: '72/82', has_theory: true },
-  { id: '4', title: 'History Finals', class: 'SS2 A,B,C', date: 'Feb 7, 2026', students: 85, avg_score: 67, pass_rate: 73, highest: 82, lowest: 98, submissions: '65/82', has_theory: false },
+  { id: '1', title: 'Mathematics Finals', class: 'SS1 A,B,C', date: 'Feb 5, 2026', students: 62, avg_score: 70, pass_rate: 84, highest: 95, lowest: 40, submissions: '60/62', has_theory: true, link: '/results/1' },
+  { id: '2', title: 'Mathematics Finals', class: 'SS2 A,B,C', date: 'Feb 5, 2026', students: 87, avg_score: 64, pass_rate: 75, highest: 80, lowest: 42, submissions: '80/82', has_theory: false, link: '/results/2' },
+  { id: '3', title: 'Science Finals', class: 'SS2 A,B,C', date: 'Feb 6, 2026', students: 90, avg_score: 70, pass_rate: 78, highest: 85, lowest: 95, submissions: '72/82', has_theory: true, link: '/results/3' },
+  { id: '4', title: 'History Finals', class: 'SS2 A,B,C', date: 'Feb 7, 2026', students: 85, avg_score: 67, pass_rate: 73, highest: 82, lowest: 98, submissions: '65/82', has_theory: false, link: '/results/4' },
 ];
 
 const mockStudentResults = [
-  { id: '1', name: 'Jane Doe', email: 'janedoe@springhill.com', student_id: 'STU1239', class: 'JSS 2', section: 'Section A', score: 78, grade: 'A', position: '2ND' },
-  { id: '2', name: 'Jameson Black', email: 'jamesonblack@springhill.com', student_id: 'STU156', class: 'JSS 2', section: 'Section B', score: 56, grade: 'C', position: '6TH' },
-  { id: '3', name: 'Amelia Spoon', email: 'aspoon@springhill.com', student_id: 'STU1278', class: 'JSS2', section: 'Section A', score: 62, grade: 'B', position: '5TH' },
-  { id: '4', name: 'John Doe', email: 'johndoe@springhill.com', student_id: 'STU1309', class: 'JSS 2', section: 'Section B', score: 84, grade: 'A', position: '1ST' },
-  { id: '5', name: 'Malcom Johnson', email: 'malcomyjohnson@springhill.com', student_id: 'STU678', class: 'JSS 2', section: 'Section C', score: 82, grade: 'A', position: '1ST' },
-  { id: '6', name: 'Akemefuna Oluchi', email: 'Akemefuna...@springhill.com', student_id: 'STU1476', class: 'JSS 2', section: 'Section C', score: 66, grade: 'B', position: '5TH' },
-  { id: '7', name: 'Celine Dion', email: 'celinedion@springhill.com', student_id: 'STU521', class: 'JSS 2', section: 'Section C', score: 74, grade: 'A', position: '3RD' },
-  { id: '8', name: 'Sofia Vagara', email: 'sofiavagara@springhill.com', student_id: 'STU983', class: 'JSS 2', section: 'Section C', score: 70, grade: 'A', position: '4TH' },
+  { id: '1', name: 'Jane Doe', email: 'janedoe@springhill.com', student_id: 'STU1239', class: 'JSS 2', section: 'Section A', score: 78, grade: 'A', position: '2ND', link: '/results/1' },
+  { id: '2', name: 'Jameson Black', email: 'jamesonblack@springhill.com', student_id: 'STU156', class: 'JSS 2', section: 'Section B', score: 56, grade: 'C', position: '6TH', link: '/results/2' },
+  { id: '3', name: 'Amelia Spoon', email: 'aspoon@springhill.com', student_id: 'STU1278', class: 'JSS2', section: 'Section A', score: 62, grade: 'B', position: '5TH', link: '/results/3' },
+  { id: '4', name: 'John Doe', email: 'johndoe@springhill.com', student_id: 'STU1309', class: 'JSS 2', section: 'Section B', score: 84, grade: 'A', position: '1ST', link: '/results/4' },
+  { id: '5', name: 'Malcom Johnson', email: 'malcomyjohnson@springhill.com', student_id: 'STU678', class: 'JSS 2', section: 'Section C', score: 82, grade: 'A', position: '1ST', link: '/results/5' },
+  { id: '6', name: 'Akemefuna Oluchi', email: 'Akemefuna...@springhill.com', student_id: 'STU1476', class: 'JSS 2', section: 'Section C', score: 66, grade: 'B', position: '5TH', link: '/results/6' },
+  { id: '7', name: 'Celine Dion', email: 'celinedion@springhill.com', student_id: 'STU521', class: 'JSS 2', section: 'Section C', score: 74, grade: 'A', position: '3RD', link: '/results/7' },
+  { id: '8', name: 'Sofia Vagara', email: 'sofiavagara@springhill.com', student_id: 'STU983', class: 'JSS 2', section: 'Section C', score: 70, grade: 'A', position: '4TH', link: '/results/8' },
 ];
 
 // Theory grading screen
@@ -50,6 +52,7 @@ export default function ResultsPage() {
 
   const { data } = useQuery({ queryKey: ['t-results'], queryFn: () => resultsApi.getAll(), placeholderData: mockResults as any });
   const results: any[] = (data as any[] | undefined) || mockResults;
+  const navigate = useNavigate();
 
   const theory_total = Object.values(grades).reduce((a, g) => a + Number(g.score || 0), 0);
   const total = mockTheoryGrading.mcq_score + theory_total;
@@ -267,7 +270,7 @@ export default function ResultsPage() {
                     <td className="px-3 py-3 font-bold text-primary">{s.grade}</td>
                     <td className="px-3 py-3 font-semibold text-navy">{s.position}</td>
                     <td className="px-3 py-3">
-                      <button className="flex items-center gap-1 text-primary text-[11px] font-medium hover:underline">
+                      <button onClick={() => navigate(s.link)}  className="flex items-center gap-1 text-primary text-[11px] font-medium hover:underline">
                         👁 View
                       </button>
                     </td>
@@ -333,6 +336,8 @@ export default function ResultsPage() {
               <div className="flex gap-2">
                 {r.has_theory && <button onClick={() => setGradeTheory(r)} className="btn-primary text-xs py-1.5 px-3">Grade Theory</button>}
                 <button onClick={() => setViewResult(r)} className="btn-outline text-xs py-1.5 px-3">View Result</button>
+                {/* <button onClick={() => navigate(r.link)} className="btn-outline text-xs py-1.5 px-3">View Result</button> */}
+
               </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
